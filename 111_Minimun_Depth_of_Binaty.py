@@ -7,5 +7,7 @@ class Solution(object):
     def minDepth(self,root):
         if root==None:
             return 0
+        elif root.left==None or root.right==None:
+            return max(self.minDepth(root.left),self.minDepth(root.right))+1
         else:
             return min(self.minDepth(root.left),self.minDepth(root.right))+1
