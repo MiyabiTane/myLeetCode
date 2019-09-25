@@ -7,10 +7,10 @@ def removeDuplicates(nums):
             if nums[i]==mark and nums[i]!=nums[-1]:
                 nums.pop(i)
             mark=nums[i+1]
-            #print("%d:%d"%(mark,nums))
+            print("%d:%d"%(mark,nums))
     except:
         pass
-    #print(nums)
+    print(nums)
     return len(nums)
 
     #mark=nums[0]
