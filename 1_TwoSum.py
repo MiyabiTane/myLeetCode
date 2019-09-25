@@ -1,17 +1,20 @@
 class Solution(object):
     def twoSum(self, nums, target):
         rtype=[]
+        dict={}
         self.nums=nums
         self.target=target
-        for i in range(len(self.nums)):
-            for j in range(i+1,len(self.nums)):
-                #print("n[i]: %d  n[j]: %d"%(self.nums[i],self.nums[j]))
-                if self.nums[i]+self.nums[j]==self.target:
-                    #print("find pair")
-                    rtype.append(i)
-                    rtype.append(j)
-        return rtype
 
+        #get dictionary
+        for i in range(len(self.nums)):
+            dict[self.nums[i]]=i
+
+        #search
+        for i in range(len(self.nums)):
+            comp=self.target-nums[i]
+            if (comp in dict) and (dict.get(comp)!=i):
+                rtype=[i,dict.get(comp)]
+                return rtype
 
         """
         :type nums: List[int]
