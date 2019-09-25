@@ -13,10 +13,12 @@ def myAtoi(str):
             break
             if flag!=1 and flag2!=1:
                 return 0
-        elif flag2==1 and str[i]==' ':
+        elif (flag2==1 or flag==1 or flag3==1) and str[i]==' ':
             break
         elif str[i] in list:
-            if str[i]=='-':
+            if flag2==1 and (str[i]=='+' or str[i]=='-'):
+                break
+            elif str[i]=='-':
                 flag=1
             elif str[i]=='+':
                 flag3=1
