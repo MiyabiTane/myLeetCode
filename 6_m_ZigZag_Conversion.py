@@ -4,11 +4,13 @@ def convert(s,numRows):
     flag=0
     for word in s:
         nums[i].append(word)
-        if flag==1 and i==numRows-2:
-            i=0
+        if flag==1 and i!=0:
+            i-=1
+        elif flag==1 and i==0:
+            i+=1
             flag=0
         elif i==numRows-1:
-            i=1
+            i-=1
             flag=1
         else:
             i+=1
