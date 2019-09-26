@@ -3,6 +3,7 @@ def myAtoi(str):
     ans=[]
     isminus=0
     flag=0
+    
     if str=="":
         return 0
     str=str.strip() #remove whitespace character
