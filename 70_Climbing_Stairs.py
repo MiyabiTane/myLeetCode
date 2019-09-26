@@ -1,10 +1,9 @@
 def climbStairs(n):
-    if n==1:
-        return 1
-    elif n==2:
-        return 2
-    else:
-        return climbStairs(n-1)+climbStairs(n-2)
-
-#再帰アルゴリズムではフィボナッチの時間複雑度がO((1+√5)/2)
-#動的計画法っぽく書いてみる
+    ans=[0]*(n+1)
+    for i in range(1,n+1):
+        if i==1 or i==2:
+            ans[i]=i
+        else:
+            ans[i]=ans[i-1]+ans[i-2]
+        #print(ans)
+    return ans[-1]
