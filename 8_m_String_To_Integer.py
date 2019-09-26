@@ -3,7 +3,7 @@ def myAtoi(str):
     ans=[]
     isminus=0
     flag=0
-    
+
     if str=="":
         return 0
     str=str.strip() #remove whitespace character
@@ -23,7 +23,6 @@ def myAtoi(str):
     inte=0
     for i in range(len(ans)):
         inte+=int(ans.pop(-1))*10**i
-
     if isminus==2:
         inte*=(-1)
     if inte<(-2)**31:
