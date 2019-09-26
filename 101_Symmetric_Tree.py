@@ -6,6 +6,15 @@ class TreeNode(object):
 
 class Solution(object):
     def isSymmetric(self,root):
-        q=[]
-        q.append(self.left.val)
-        if self.right.val==q[-1]:
+        return self.check(root,root)
+
+    #check wether t2 is mirror of t1
+    def check(self,t1,t2):
+        if not t1 and not t2:
+            return True
+        elif not t1 or not t2:
+            return False
+        elif t1.val==t2.val:
+            if self.check(t1.left,t2.right) and self.check(t1.right,t2.left):
+                return True
+        return False
