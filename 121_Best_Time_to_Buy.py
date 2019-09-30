@@ -1,4 +1,6 @@
 def maxProfit(prices):
+    if len(prices)<2:
+        return 0
     pro=0
     min=max(prices)
     for i in range(len(prices)):
