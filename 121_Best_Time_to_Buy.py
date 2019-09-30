@@ -1,9 +1,9 @@
 def maxProfit(prices):
-    pro=-1
+    pro=0
+    min=max(prices)
     for i in range(len(prices)):
-        for j in range(i+1,len(prices)):
-            if pro<prices[j]-prices[i]:
-                pro=prices[j]-prices[i]
-    if pro<=0:
-        return 0
+        if prices[i]<min:
+            min=prices[i]
+        elif prices[i]-min>pro:
+            pro=prices[i]-min
     return pro
