@@ -7,9 +7,11 @@ class Solution(object):
     def hasCycle(self,head):
         ListRemine=[]
         while head:
-            if head.val in ListRemine:
+            if head in ListRemine:
                 return True
             else:
-                ListRemine.append(head.val)
+                ListRemine.append(head)
                 head=head.next
         return False
+        
+#head.valではなくheadごとみないと同じ数字が出現しただけでループとみなしてしまう
