@@ -5,26 +5,29 @@ class ListNode(object):
 
 class Solution(object):
     def getIntersectionNode(self,headA,headB):
-        pA=headA
-        pB=headB
-        count=0
-        while True:
-            if count==2:
-                break
-            elif pA==pB:
-                return pA
-            elif pA or pB:
-                if pA==None:
-                    pA=headB
-                    pB=pB.next
-                    count+=1
-                elif pB==None:
-                    pA=pA.next
-                    pB=headA
-                else:
-                    pA=pA.next
-                    pB=pB.next
-            else:
-                pA=headB
-                pB=headA
-        return None
+        if headA is None or headB is None:
+            return None
+        pa = headA
+        pb = headB
+        while pa is not pb:
+            pa = headB if pa is None else pa.next
+            pb = headA if pb is None else pb.next
+        return pa
+
+"""
+>>> while a!=10:
+...     b = 1 if a%2==0 else 2
+...     print(b)
+...     a+=1
+...
+1
+2
+1
+2
+1
+2
+1
+2
+1
+2
+"""
