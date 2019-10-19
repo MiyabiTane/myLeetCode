@@ -1,8 +1,3 @@
 def majorityElement(nums):
-    count=0
-    for num in nums:
-        if count==0:
-            candidate=num
-        count+=1 if num==candidate else -1
-        #print(candidate,count)
-    return candidate
+    nums.sort()
+    return nums[len(nums)//2]
