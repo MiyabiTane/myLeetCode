@@ -1,6 +1,10 @@
 def rotate(nums,k):
     if len(nums)<2:
         return nums
+    k=k%len(nums)
+    nums[:k],nums[k:]=nums[len(nums)-k:],nums[:len(nums)-k]
+    return nums
+    """
     nums_v=[]
     k=k%len(nums)
     for i in range(len(nums)):
@@ -14,3 +18,4 @@ def rotate(nums,k):
         #print("nums_v[{}] is {} ".format(i-k,nums_v[i-k]))
     return nums
     #nums=nums[-k:]+nums[:-k] <= not in-place
+    """
