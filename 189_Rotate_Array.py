@@ -1,21 +1,18 @@
 def rotate(nums,k):
+    #reverse left, reverse right ->reverse whole
+    #don't need to remine the number -> O(1)
     if len(nums)<2:
         return nums
     k=k%len(nums)
-    nums[:k],nums[k:]=nums[len(nums)-k:],nums[:len(nums)-k]
+
+    def partreverse(nums,start,end):
+        while start<end:
+            nums[start],nums[end]=nums[end],nums[start]
+            start+=1
+            end-=1
+
+    partreverse(nums,0,len(nums)-k-1)
+    partreverse(nums,len(nums)-k,len(nums)-1)
+    partreverse(nums,0,len(nums)-1)
+
     return nums
-    """
-    nums_v=[]
-    k=k%len(nums)
-    for i in range(len(nums)):
-        nums_v.append(nums[i])
-    #nums_v=nums <-nums_v changes every time when i change
-    #print(nums_v)
-    #print('')
-    for i in range(len(nums_v)):
-        nums[i]=nums_v[i-k]
-        #print("nums = {}, nums_v = {}".format(nums,nums_v))
-        #print("nums_v[{}] is {} ".format(i-k,nums_v[i-k]))
-    return nums
-    #nums=nums[-k:]+nums[:-k] <= not in-place
-    """
