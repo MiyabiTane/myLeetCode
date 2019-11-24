@@ -8,12 +8,17 @@ def threeSum(nums):
             #print("continue")
             continue
         target=-nums[i]
-        check=[]
-        for j in range(i+1,len(nums)):
-            if j>1 and nums[j]==nums[j-2]:
-                continue
-            target_2=target-nums[j]
-            if (target_2 in nums[j+1:])and (not (target_2 in check)):
-                ans.append([nums[i],nums[j],target_2])
-                check.append(nums[j]
+        j=i+1;k=len(nums)-1
+        while j<k:
+            if nums[j]+nums[k]==target:
+                ans.append([nums[i],nums[j],nums[k]])
+                j+=1;k-=1
+                while j<k and nums[j]==nums[j-1]:
+                    j+=1
+                while j<k and nums[k1]==nums[k]:
+                    k-=1
+            elif nums[j]+nums[k]<target:
+                j+=1
+            else:
+                k-=1
     return ans
