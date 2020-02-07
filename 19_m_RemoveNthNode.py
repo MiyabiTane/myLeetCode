@@ -12,18 +12,18 @@ class  Solution(object):
             length+=1
             copylist=copylist.next
         #remove
-        if length==1 or length==0:
-            return None
-        cur=head
+        dummy=ListNode(0)
+        dummy.next=head
+        first=dummy
         count=0
-        while cur:
-            if count==length-n-1:
-                cur.next=cur.next.next
+        while first:
+            if count==length-n:
+                first.next=first.next.next
             else:
-                cur=cur.next
+                first=first.next
         #print(head)
             count+=1
-        return head
+        return dummy.next
 """
 list=ListNode([1,2,3,4,5])
 solu=Solution()
