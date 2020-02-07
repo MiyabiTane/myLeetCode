@@ -5,28 +5,17 @@ class ListNode(object):
 
 class  Solution(object):
     def removeNthFromEnd(self,head,n):
-        #get the length
-        length=0
-        copylist=head
-        while copylist!=None:
-            length+=1
-            copylist=copylist.next
-        #remove
+        #add 0 to head of the head
         dummy=ListNode(0)
         dummy.next=head
         first=dummy
-        count=0
-        while first:
-            if count==length-n:
-                first.next=first.next.next
-            else:
-                first=first.next
-        #print(head)
-            count+=1
+        second=dummy
+        #put the first pointer on it's start
+        for i in range(n+1):
+            first=first.next
+        #move two pointer
+        while first!=None:
+            first=first.next
+            second=second.next #change the position of the pointer
+        second.next=second.next.next #change dummy
         return dummy.next
-"""
-list=ListNode([1,2,3,4,5])
-solu=Solution()
-head=solu.removeNthFromEnd(list,2)
-#print(head)
-"""
