@@ -1,18 +1,17 @@
+#"("の数と")"の数に注目
 def generateParenthesis(n):
     answer=[]
-    if n==0:
-        return [""]
-    elif n==1:
-        return ["()"]
-    else:
-        pre_answer=generateParenthesis(n-1)
-        for i in range(len(pre_answer)):
-            answer.append("("+pre_answer[i]+")")
-            answer.append("()"+pre_answer[i])
-            #if ("()"+pre_answer[i])!=(pre_answer[i]+"()"):
-            answer.append(pre_answer[i]+"()")
-        answer=[a for a in set(answer)]
+    def backtrack(S="",left=0,right=0):
+        if len(S)==2*n:
+            answer.append(S)
+            #print(answer)
+        #elifにしないことで全パターンを調べることができる。
+        if left<n:
+            backtrack(S+'(',left+1,right)
+        if right<left:
+            backtrack(S+')',left,right+1)
+    backtrack()
     return answer
 
-an=generateParenthesis(4)
+an=generateParenthesis(3)
 print(an)
