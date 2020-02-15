@@ -1,39 +1,32 @@
 import numpy as np
 def isValidSudoku(board):
-    #数字があればそれを格納
-    row_list=[[] for i in range(len(board))]
-    col_list=[[] for i in range(len(board[0]))]
-    box_list=[[] for i in range(9)]
-    r_count=0
-    c_count=0
-    b_count=0
-    plus=3
-    for i in range(len(board)):
-        r_count+=1
-        c_count=0
-        for j in range(len(board[0])):
-            c_count+=1
-            if j%3==0:
-                b_count+=1
-                if b_count==4:
-                    b_count=1
-            if ((i+1)*(j+1))%27==0:
-                b_count+=plus
-            print("b_count={}".format(b_count))
-            #print("row={},column={},box={}".format(r_count,c_count,b_count))
-            #格納
+    #check row
+    for i in range(9):
+        row=[]
+        for j in range(9):
             if board[i][j]!=".":
-                keep_num=int(board[i][j])
-                row_list[r_count-1].append(keep_num)
-                col_list[c_count-1].append(keep_num)
-                box_list[b_count-1].append(keep_num)
-    print(np.array(row_list))
-    print(np.array(col_list))
-    print(np.array(box_list))
-    if ([] in row_list) or ([] in col_list) or ([] in box_list):
-        return False
+                row.append(int(board[i][j]))
+        #print(row)
+        if len(set(row))!=len(row):
+            return False
+    #check column
+    for i in range(len(board[0])):
+        col=[board[j][i] for j in range(9) if board[j][i]!="."]
+        #print(col)
+        if len(set(col))!=len(col):
+            return False
+    #check sub-boxes
+    for i in range(0,9,3):
+        for j in range(0,9,3):
+            sub_box=[]
+            for x in range(3):
+                for y in range(3):
+                    if board[i+x][j+y]!=".":
+                        sub_box.append(board[i+x][j+y])
+            #print(sub_box)
+            if len(set(sub_box))!=len(sub_box):
+                return False
     return True
-
 
 ans=isValidSudoku([
   ["5","3",".",".","7",".",".",".","."],
