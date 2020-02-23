@@ -35,7 +35,7 @@ class Solution(object):
             dummy=answer
             for i in range(len(sum_list)):
                 dummy.next=sum_list[i]
-                dummy=dummy.next
+                dummy=dummy.next #種悪の根源。ここでdummyがintに
             return answer.next
 
         num_l1=GetNum(l1)
