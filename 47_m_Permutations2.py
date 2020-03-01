@@ -1,31 +1,28 @@
 def permuteUnique(nums):
-    #count : [1,1,2,4]->[0,2,1,0,1,0...]
-    #d : 一つの順列を作り終えたか判断
+    nums.sort()
     ans=[]
-    def like_backtrack(nums,count,tmp,d):
+    def like_backtrack(nums,seen,tmp,d):
         if d==len(nums):
             copy=tmp.copy()
-            if not copy in ans:
-                ans.append(copy)
+            ans.append(copy)
             return
-        else:
-            for i in range(len(nums)):
-                if count[nums[i]]==0:
-                    continue
-                count[nums[i]]-=1
+        for i in range(len(nums)):
+            if seen[i]==0:
+                #同じ数字は飛ばす
+                if i>0 and nums[i]==nums[i-1] and seen[i-1]==0:
+                    continue    
                 tmp[d]=nums[i]
-                like_backtrack(nums,count,tmp,d+1)
-                count[nums[i]]+=1
-                tmp[d]=0
+                seen[i]=1
+                like_backtrack(nums,seen,tmp,d+1)
+                seen[i]=0
+                tmp[d]=0    
 
-    count=[0]*10 
-    for i in range(len(nums)):
-        count[nums[i]]+=1
+    seen=[0]*len(nums) 
     tmp=[0]*len(nums)
-    like_backtrack(nums,count,tmp,0)
+    like_backtrack(nums,seen,tmp,0)
     return ans
 
 ans=permuteUnique([1,1,2])
 print(ans)
 
-
+#参考:https://www.youtube.com/watch?v=snAviXjcfpY
