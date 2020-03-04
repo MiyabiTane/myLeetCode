@@ -1,31 +1,27 @@
-import numpy as np
 def spiralOrder(matrix):
     if matrix==[]:
         return []
     #どこをすでに通ったかの記録
-    seen=np.zeros((len(matrix),len(matrix[0])), dtype=np.int)
-    seen=np.pad(seen, (1,1), 'constant', constant_values=(1,1))
-    #matrixをseenと同じ形に
-    dummy=np.pad(matrix, (1,1), 'constant')
-    #print(seen)
-    #print(dummy)
+    R,C=len(matrix),len(matrix[0])
+    seen=[[0]*C for _ in matrix]
+    dr=[0,1,0,-1] #iの回る方向
+    dc=[1,0,-1,0] #jの回る方向
 
-    ip=1; jp=1
     ans=[]
-    while True:
-        ans.append(dummy[ip][jp])
-        seen[ip][jp]=1
-        if seen[ip][jp-1]==1 and seen[ip-1][jp]==1 and seen[ip][jp+1]==1 and seen[ip+1][jp]==1: 
-            break
-        elif seen[ip][jp-1]==1 and seen[ip-1][jp]==1 and seen[ip][jp+1]==0:
-            jp+=1
-        elif seen[ip-1][jp]==1 and seen[ip][jp+1]==1 and seen[ip+1][jp]==0:
-            ip+=1
-        elif seen[ip][jp+1]==1 and seen[ip+1][jp]==1 and seen[ip][jp-1]==0:
-            jp-=1
-        elif seen[ip][jp-1]==1 and seen[ip+1][jp]==1 and seen[ip-1][jp]==0:
-            ip-=1
+    r=c=di=0
+    for i in range(R*C):
+        ans.append(matrix[r][c])
+        seen[r][c]=1
+        next_r=r+dr[di]
+        next_c=c+dc[di]
+        if 0<=next_r<R and 0<=next_c<C and seen[next_r][next_c]==0:
+            r=next_r; c=next_c
+        else:
+            di=(di+1)%4
+            r=r+dr[di]
+            c=c+dc[di]
     return ans
+    
 
 ans=spiralOrder([[1,2,3],
             [4,5,6],
