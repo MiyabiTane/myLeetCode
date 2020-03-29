@@ -1,35 +1,28 @@
 def getPermutation(n, k):
-    def factoral(num):
-        if num==0 or num==1:
-            return 1
-        ans = 1
-        while True:
-            ans *= num
-            num -= 1
-            if num == 1:
-                return ans
-    def getPermutation_sub(lst, n, k, p):
-        if p==n-1:
-            while lst[p] in lst[:p]:
-                lst[p] += 1
-            return lst
-        num=factoral(n-1-p)
-        if num>=k:
-            while lst[p] in lst[:p]:
-                lst[p]+=1
-            return getPermutation_sub(lst, n, k, p+1)
-        else:
-            lst[p]+=1
-            while lst[p] in lst[:p]:
-                lst[p]+=1
-            k-=num
-            if k==0:
-                return lst
-            return getPermutation_sub(lst, n, k, p)
-    init_lst=[1]*n
-    ans=getPermutation_sub(init_lst, n, k ,0)
+    ans=[]
+    remain_num=[i+1 for i in range(n)]
+    #累乗のリスト
+    fact_list = [1]
+    for i in range(1, n+1):
+        fact_list.append(fact_list[-1]*i)
+    #n -> n-len(ans), k -> 残りのk
+    def decide_num(n, k):
+        fac=fact_list[n]
+        count=0
+        if k!=fac:
+            while k>fac:
+                k-=fac
+                count+=1
+        return count, k
+    remain=n-1
+    for i in range(n):
+        count,k = decide_num(remain, k)
+        add_num = remain_num.pop(count)
+        ans.append(add_num)
+        remain-=1
+       
     ans=list(map(str,ans))
     return "".join(ans)
 
-ans=getPermutation(3,2)
+ans=getPermutation(3,3)
 print(ans)
