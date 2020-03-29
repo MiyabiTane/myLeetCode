@@ -5,10 +5,7 @@ class ListNode:
 
 class Solution:
     def rotateRight(self, head: ListNode, k: int) -> ListNode:
-        #print(head)
-        if head == None:
-            return None
-        if k == 0:
+        if head == None or head.next == None:
             return head
 
         def count_length(head):
@@ -22,12 +19,10 @@ class Solution:
 
         count = head
         length = count_length(count)
-        while k >= length:
-            k -= length
-            if k == 0:
-                return head
-        #print("k is ",k)
-        #print(length)
+        k %= length
+        if k == 0:
+            return head
+        
         remine = ListNode(0)
         rem_dummy = remine
         #頭のlen-k個をremineに。残りをheadに。
