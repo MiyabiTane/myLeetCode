@@ -1,5 +1,6 @@
 def getPermutation(n, k):
     ans=[]
+    #ここからpopすれば数字の重複気にしなくていい
     remain_num=[i+1 for i in range(n)]
     #累乗のリスト
     fact_list = [1]
