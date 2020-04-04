@@ -1,26 +1,25 @@
-import math
 def uniquePathsWithObstacles(obstacleGrid):
+    if obstacleGrid[0][0] == 1:
+        return 0
     m=len(obstacleGrid)
     n=len(obstacleGrid[0])
-    def findObstacle(obstacleGrid):
-        for i in range(m):
-            for j in range(n):
-                if obstacleGrid[i][j]==1:
-                    return i+1,j+1
-        return False
+    obstacleGrid[0][0]=1
+    #first row
+    for i in range(1,n):
+        #論理積　0&1=0, 1&1=1, intつけないとTrue or Falseで返ってくる。
+        obstacleGrid[0][i]=int(obstacleGrid[0][i-1]==1 and obstacleGrid[0][i]==0)
+    #first col
+    for i in range(1,m):
+        obstacleGrid[i][0]=int(obstacleGrid[i-1][0]==1 and obstacleGrid[i][0]==0)
+    #残りのマス
+    for i in range(1,m):
+        for j in range(1,n):
+            if obstacleGrid[i][j]==1:
+                obstacleGrid[i][j]=0
+            else:
+                obstacleGrid[i][j]=obstacleGrid[i-1][j]+obstacleGrid[i][j-1]
+    #print(obstacleGrid)
+    return obstacleGrid[m-1][n-1]
 
-    def uniquePaths(m,n):
-        return int(math.factorial(m+n-2)/(math.factorial(m-1)*math.factorial(n-1)))
-
-    answer = uniquePaths(m, n)
-    if findObstacle(obstacleGrid):
-        ob_m, ob_n = findObstacle(obstacleGrid)
-        start_to_ob = uniquePaths(ob_m, ob_n)
-        ob_to_fin = uniquePaths(m-ob_m+1, n-ob_n+1)
-        answer -= (start_to_ob+ob_to_fin)
-    return answer
-
-init_list=[[0,0,0],[0,1,0],[0,0,0]]
-ans=uniquePathsWithObstacles(init_list)
+ans=uniquePathsWithObstacles([[0,0],[1,1],[0,0]])
 print(ans)
-
