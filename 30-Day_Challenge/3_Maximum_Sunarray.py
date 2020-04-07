@@ -10,6 +10,5 @@ def maxSubArray(nums):
             max_num = max_pre
     return max_num
 
-
 ans = maxSubArray([-2, 1, -3, 4, -1, 2, 1, -5, 4])
 print(ans)
