@@ -1,7 +1,8 @@
 from collections import deque
 def openLock(deadends, target):
-    qu = deque([("0000",0)])
-    visited = ["0000"]
+    deadends = set(deadends)
+    qu = deque([("0000", 0)])
+    visited = set("0000")
     while qu:
         num, count = qu.popleft()
         if num == target:
@@ -10,14 +11,14 @@ def openLock(deadends, target):
             continue
         for i in range(4):
             #数字を一つ上げる
-            new_num = num[:i]+str((int(num[i])+1)%10)+num[i+1:]
+            new_num = num[:i]+str((int(num[i])+1) % 10)+num[i+1:]
             if not new_num in visited:
-                visited.append(new_num)
-                qu.extend([(new_num,count+1)])
+                visited.add(new_num)
+                qu.extend([(new_num, count+1)])
             #数字を一つ下げる
-            new_num = num[:i]+str((int(num[i])+9)%10)+num[i+1:]
+            new_num = num[:i]+str((int(num[i])+9) % 10)+num[i+1:]
             if not new_num in visited:
-                visited.append(new_num)
+                visited.add(new_num)
                 qu.extend([(new_num, count+1)])
     return -1
 
