@@ -7,22 +7,15 @@
 
 class Solution:
     def diameterOfBinaryTree(self, root: TreeNode) -> int:
-        if not root:
-            return 0
-        def countLen(root, length):
-            if (not root.left) and (not root.right):
-                return length
-            else:
-                length += 1
-                if root.left and root.right:
-                    return max(countLen(root.right,length),countLen(root.left,length))
-                elif root.left:
-                    return countLen(root.left,length)
-                elif root.right:
-                    return countLen(root.right,length)
-        len = countLen(root, 0)
-        return len
+        self.length = 0
 
-
-            
-
+        def countLen(root):
+            if not root:
+                return 0
+            left = countLen(root.left)
+            right = countLen(root.right)
+            self.length = max(self.length, left+right)
+            return max(left,right)+1
+        
+        countLen(root)
+        return self.length
