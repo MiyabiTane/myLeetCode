@@ -1,31 +1,25 @@
 def checkValidString(s):
-    keep = []
-    for i,sig in enumerate(s):
-        if sig == ')':
-            if keep and (keep[-1] == '('):
-                keep.pop()
-            elif len(keep)>=2 and (keep[-2:] == ['(','*']):
-                if i!=len(s)-1 and s[i+1]==')':
-                    continue
-                keep = keep[:-2]
-            elif len(keep)>=3 and (keep[-3:] == ['(','*',')']):
-                keep = keep[:-3]
-            elif keep and (keep[-1] == '*'):
-                keep.pop()
-            else:
-                return False
-        elif sig == '(':
-            keep.append(sig)
+    #'('と')'の数だけに注目すれば良い。*はあり得るパターンをメモすればいい。
+    low = 0; high =0
+    for sig in s:
+        if sig == '(':
+           low += 1; high += 1
+        elif sig == ')':
+            low -= 1; high -= 1
         elif sig == '*':
-            if keep[-1] == '(':
-                keep.append(sig)
-        print(keep)
-    if (')' in keep) or ('(' in keep):
-        return False
-    return True
+            low -= 1 #もし*が)だったら
+            high += 1 #もし*が(だったら
+        low = max(0, low) #low<0の時点でFalse
+        if high < 0: #)が一番左にきてしまった時
+            return False
+        #print(low, high)
+    #lowとhighの間に0がある、すなわち左右の()数が等しくなり得る時
+    if low == 0:
+        return True
+    return False
 
 
-ans = checkValidString("(*()")
+ans = checkValidString("(())((())()()(*)(*()(())())())()()((()())((()))(*")
 print(ans)
         
             
