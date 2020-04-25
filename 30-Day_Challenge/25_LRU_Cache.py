@@ -1,34 +1,33 @@
+import collections
 class LRUCache:
     def __init__(self, capacity: int):
-         self.cache = {}
-         self.capacity = capacity
-         self.seen = {} #key,number(大きいほど最新)
+        #並び順つき辞書！
+        self.cache = collections.OrderedDict()
+        self.capacity = capacity
 
     def get(self, key: int) -> int:
         if key in self.cache:
             print(self.cache[key])
-            self.seen[key] = max(self.seen.values()) + 1
-            return self.cache[key]
+            value = self.cache.pop(key)
+            self.cache[key] = value #順番更新
+            return value
         print(-1)
         return -1
 
     def put(self, key: int, value: int) -> None:
         if not key in self.cache:
             self.cache[key] = value
-            if len(self.seen) == 0:
-                self.seen[key] = 0
-            else:
-                self.seen[key] = max(self.seen.values()) + 1
         else: #ここは問題設定ミスな気がする
-            self.cache[key] = value
-            self.seen[key] = max(self.seen.values()) + 1
+            self.cache.pop(key)
+            self.cache[key] = value  
 
-        if len(self.cache) > self.capacity:
-            pop_value = min(self.seen.values())
-            pop_key = [k for k, v in self.seen.items() if v == pop_value][0]
-            self.cache.pop(pop_key)
-            self.seen.pop(pop_key)
-        print(self.cache, self.seen)
+        if self.capacity > 0:
+            self.capacity -= 1
+        else: 
+            #last = True -> LIFO, last = False -> FIFO
+            self.cache.popitem(last = False)
+            self.cache[key] = value
+        print(self.cache)
 
 cache = LRUCache(2)
 cache.put(2, 1)
