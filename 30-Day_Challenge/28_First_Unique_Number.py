@@ -1,34 +1,34 @@
 class FirstUnique:
     def __init__(self, nums):
-        self.queue = nums
-        self.unique = []
-        self.dupli = []
+        self.queue = []
+        self.seen = {}
         for num in nums:
-            if num in self.unique:
-                self.unique.pop(self.unique.index(num))
-                if not num in self.dupli:
-                    self.dupli.append(num)
-            elif not num in self.dupli:
-                self.unique.append(num)
+            if num in self.seen:
+                self.seen[num] += 1
+            else:
+                self.seen[num] = 1
+                self.queue.append(num)
 
     def showFirstUnique(self):
-        if self.unique:
-            print(self.unique[0])
-            return self.unique[0]
+        if len(self.queue) == 0:
+            print(-1)
+            return -1
+        while self.queue:
+            num = self.queue[0]
+            if self.seen[num] > 1:
+                self.queue.pop(0)
+            else:
+                print(num)
+                return num
         print(-1)
         return -1
 
     def add(self, value):
-        #print("add",value)
-        if value in self.unique:
-            self.unique.pop(self.unique.index(value))
-            if not value in self.dupli:
-                self.dupli.append(value)
-        elif not value in self.dupli:
-            self.unique.append(value)
-        #print("uni", self.unique)
-        #print("dup", self.dupli)
-
+        if value in self.seen:
+            self.seen[value] += 1
+        else:
+            self.seen[value] = 1
+            self.queue.append(value)
 
 qu = FirstUnique([7,7,7,7,7])
 qu.showFirstUnique()
