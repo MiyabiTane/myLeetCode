@@ -7,22 +7,19 @@
 
 class Solution:
     def maxPathSum(self, root):
-        if not root.right and not root.left:
-            return root.val
-        def countsum(root, sum):
-            if not root:
-                return sum
-            elif not root.right and not root.left:
-                return max(sum, root.val, sum+root.val)
-            elif not root.right:
-                return max(sum, countsum(root.left, sum), countsum(root.left, 0))
-            elif not root.left:
-                return max(sum, countsum(root.right, sum), countsum(root.right, 0))
-            num = root.val
-            left = countsum(root.left, 0)
-            right = countsum(root.right, 0)
-            left_sum = countsum(root.left, sum)
-            right_sum = countsum(root.right, sum)
-            return max(sum, left_sum, right_sum, num+left+right)
+        self.current_max = float("-inf")
 
-        return countsum(root, root.val)
+        def maxPathSumHelper(root):
+            if not root:
+                return 0
+            left = maxPathSumHelper(root.left)
+            right = maxPathSumHelper(root.right)
+            if left <= 0:
+                left = 0
+            if right <= 0:
+                right = 0
+            self.current_max = max(left+right+root.val, self.current_max)
+            return max(left, right) + root.val
+
+        maxPathSumHelper(root)
+        return self.current_max
