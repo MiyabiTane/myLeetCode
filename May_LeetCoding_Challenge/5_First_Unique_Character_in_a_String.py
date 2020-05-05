@@ -1,11 +1,14 @@
+import collections
 def firstUniqChar(s: str) -> int:
-    for i in range(len(s)):
-        if not s[i] in s[:i]+s[i+1:]:
+    #key:要素　value:出現回数 の辞書が作られる 
+    hashMap = collections.Counter(s)
+    
+    for i,st in enumerate(s):
+        if hashMap[st] == 1:
             return i
-    return -1
+    return -1 
 
-
-ans = firstUniqChar("cc")
+ans = firstUniqChar("loveleetcode")
 print(ans)
     
 
