@@ -5,41 +5,15 @@
 #         self.left = left
 #         self.right = right
 
+#Each node has a unique integer value from 1 to 100.
 class Solution:
     def isCousins(self, root: TreeNode, x: int, y: int) -> bool:
-        # keep depth
-        keep_x = []
-        keep_y = []
-        def isCousinsHelper(root, depth):
-            flag = 0
-            if not root:
-                return False
-            if root.right:
-                if root.right.val == x:
-                    flag = 1
-                    if depth+1 in keep_y:
-                        return True
-                    keep_x.append(depth+1)
-                if root.right.val == y:
-                    flag = 2
-                    if depth+1 in keep_x:
-                        return True
-                    keep_y.append(depth+1)
-
-            if root.left:
-                if root.left.val == x:
-                    if depth+1 in keep_y:
-                        if flag != 2:
-                            return True
-                    keep_x.append(depth+1)
-                if root.left.val == y:
-                    if depth+1 in keep_x:
-                        if flag != 1:
-                            return True
-                    keep_y.append(depth+1)
-           
-            return isCousinsHelper(root.left, depth+1) or isCousinsHelper(root.right, depth+1)
-
-        return isCousinsHelper(root, 0)
-
-
+        def DFS(node, parent, depth, mod):
+            if node:
+                if node.val == mod:
+                    return depth, parent
+                return DFS(node.left, node, depth+1, mod) or DFS(node.right, node, depth+1, mod)
+        #右辺はtuple型で(depth, parent, depth, parent)
+        dx, px, dy, py = DFS(root, None, 0, x) + DFS(root, None, 0, y)
+        return dx == dy and px != py
+            
