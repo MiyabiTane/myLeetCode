@@ -1,13 +1,14 @@
 def isPerfectSquare(num: int) -> bool:
-    if num == 1:
-        return True
-    cand = num // 2
-    for i in range(cand, 0, -1):
-        if num % cand == 0:
-            if num / cand == cand:
-                return True
-        cand -= 1
+    left = 0; right = num
+    while left <= right:
+        mid = (left + right) // 2
+        if mid ** 2 == num:
+            return True
+        elif mid ** 2 > num:
+            right = mid - 1
+        else:
+            left = mid + 1
     return False
 
-ans = isPerfectSquare(14)
+ans = isPerfectSquare(25)
 print(ans)
