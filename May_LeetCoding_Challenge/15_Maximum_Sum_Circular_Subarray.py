@@ -1,21 +1,29 @@
+from collections import deque
 def maxSubarraySumCircular(A):
-    leng = len(A)
-    A += A[:-1]
-    start = 0; end = 0
-    max_list = [A[0]]
-    for i in range(1, len(A)):
-        end = i
-        if A[i] > max_list[-1]+A[i]:
-            start = i
-            max_list.append(A[i])
-        else:
-            max_list.append(max_list[-1]+A[i])
-        if end - start == leng-1:
-            max_list.append(A[i])
-            start = i
-    return max(max_list)
+    n = len(A)
+    B = A+A
+    P = [0]
+    #P[j] = sum B[:j]
+    for num in B:
+        P.append(P[-1] + num)
+    #1 <= j-i <= N を満たす最大のP[j]-P[i]を求める
+    # -> P[j]に対して j-N <= i を満たす最小のP[i]を求める
+    ans = A[0]
+    qu = deque([0]) #iの現在値
+    for j in range(1, len(P)):
+        # j-N <= i を満たさないiは調べない
+        if qu[0] < j-n:
+            qu.popleft()
+        
+        ans = max(ans, P[j]-P[qu[0]])
+        
+        # P[i2] <= P[i1]となるようなi1は取り除く
+        while qu and P[j] <= P[qu[-1]]:
+            qu.pop()
+        qu.append(j)
+    return ans
 
 
-ans = maxSubarraySumCircular([-2, -3, -1])
+ans = maxSubarraySumCircular([5, -3, 4])
 print(ans)
 
