@@ -6,24 +6,19 @@
 
 class Solution:
     def oddEvenList(self, head: ListNode) -> ListNode:
-        count = 0
+        if not head:
+            return None
         odd = head
         even = head.next
-        p1 = odd
-        p2 = even
-        while p1.next and p2.next:
-            count += 1
-            print("odd", odd)
-            print("even", even)
-            if count % 2 == 1:
-                p1.next = p1.next.next
-                p1 = p1.next
-            else:
-                p2.next = p2.next.next
-                p2 = p2.next
-        p1.next = p2
-        return odd
-
+        evenHead = even
+        #oddのラストがNoneは嫌だけどevenならオッケー
+        while even and even.next: 
+            odd.next = even.next
+            odd = odd.next
+            even.next = odd.next
+            even = even.next
+        odd.next = evenHead
+        return head
 
 
 
