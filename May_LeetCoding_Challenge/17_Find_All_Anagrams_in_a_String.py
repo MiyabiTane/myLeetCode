@@ -1,14 +1,21 @@
 from collections import Counter
 def findAnagrams(s: str, p: str):
-    n = len(s); m = len(p)
+    leng = len(p)
     ans = []
-    for i in range(n-m+1):
-        if sorted(Counter(s[i:i+m]).items()) == sorted(Counter(p).items()):
-            ans.append(i)
+    pCounter = Counter(p)
+    sCounter = Counter(s[:leng-1])
+    for i in range(leng-1, len(s)):
+        head = i-leng+1
+        #s[i]がもともと入っていなくても可
+        sCounter[s[i]] += 1 #windowにchar追加
+        if sCounter == pCounter:
+            ans.append(head)
+        sCounter[s[head]] -= 1 #remove head from window
+        if sCounter[s[head]] == 0:
+            del sCounter[s[head]]
     return ans
-
-
-ans = findAnagrams("abab"
-                   ,"ab")
+        
+        
+ans = findAnagrams("cbaebabacd", "abc")
 print(ans)
 
