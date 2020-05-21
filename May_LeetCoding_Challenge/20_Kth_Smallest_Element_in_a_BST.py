@@ -5,6 +5,7 @@
 #         self.left = left
 #         self.right = right
 
+
 class Solution:
     def kthSmallest(self, root: TreeNode, k: int) -> int:
         def Helper(root):
