@@ -8,7 +8,7 @@ def permuteUnique(nums):
             return
         for i in range(len(nums)):
             if seen[i]==0:
-                #同じ数字は飛ばす
+                #2回目（seen[i-1]==0）は同じ数字は飛ばす
                 if i>0 and nums[i]==nums[i-1] and seen[i-1]==0:
                     continue    
                 tmp[d]=nums[i]
