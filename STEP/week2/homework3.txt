@@ -1,6 +1,6 @@
 宿題３
 
-＜考え方１＞:cache_two_dict.py
+＜考え方１＞:homework4_using_two_dicts.py
 以下のような２つの辞書を用意します。
 ・辞書１＜cache＞
 	key : URL, value : contents とする辞書
@@ -20,7 +20,7 @@ cache_two_dict.pyではcacheのチェックをする関数を一番最近閲覧�
 
 かなり時間を割いて考えたのが方法１ですが、pythonのリストにlist.remove()という機能があることに気づいて考え方２も実装しました。
 
-＜考え方２＞:cache_dict_list.py
+＜考え方２＞:homework4_using_list_and_dict.py
 ・urlの順番を保持するリスト(order)とurlとcontentsのペアの情報を格納する辞書（cache）を用意します。
 
 以下、cacheが満タンの場合を想定します。
