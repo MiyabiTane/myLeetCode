@@ -28,6 +28,9 @@ for i in range(n):
 end = time.time()
 print("time: %.6f sec" % (end - begin))
 
+# ALEXNOTE: I reviewed this. Looked simple and effective.
+#           One suggestion: could you make the matrix multiplication code reusable?
+
 # Print C for debugging. Comment out the print before measuring the execution time.
 total = 0
 for i in range(n):
