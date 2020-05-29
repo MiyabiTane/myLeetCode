@@ -7,6 +7,11 @@ import sys
 #       Implement the data structure yourself.
 
 
+# ALEXNOTE: this version is clearer than the other one, and generally more accepted.
+#           However, I believe that self.order need to be implemented differently - 
+#           See comments below on time complexity.   Can you think of other data structures
+#           Which may perform better than list   for the insert() and remove() operations ?
+
 class Cache:
   # Initializes the cache.
   # |n|: The size of the cache.
@@ -28,6 +33,9 @@ class Cache:
     if url in self.order:
         #update url order
         self.order.remove(url)
+        # ALEXNOTE:   please see https://wiki.python.org/moin/TimeComplexity -  it says that
+        #              Python's list.insert has time complexity O(N), which is undesirable here.
+        #              Additionally, it says that list.remove is also time complexity O(N).
         self.order.insert(0, url)
     
     else:
