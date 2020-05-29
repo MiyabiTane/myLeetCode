@@ -1,6 +1,10 @@
 ;; This buffer is for text that is not saved, and for Lisp evaluation.
 ;; To create a file, visit it with C-x C-f and enter text in its buffer.
 
+;; ALEXNOTE:  this is very interesting, I think it's cool that you write it in a lisp-like language
+;;            and that it performs so much better than the Python version.
+;;            Question: do you know if this code runs compiled or interpreted? Maybe that explains the large difference.
+
 (ros::roseus "hello")
 
 (defun calc_mat (n)
