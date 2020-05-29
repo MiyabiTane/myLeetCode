@@ -4,6 +4,7 @@
 ;; ALEXNOTE:  this is very interesting, I think it's cool that you write it in a lisp-like language
 ;;            and that it performs so much better than the Python version.
 ;;            Question: do you know if this code runs compiled or interpreted? Maybe that explains the large difference.
+;; Tanemoto : I think this code runs interpreted.
 
 (ros::roseus "hello")
 
@@ -27,7 +28,7 @@
   ;;calculate mal of a, b
   ;;elt localtime 0 -> 
   ;;(setq start_time (unix:localtime))
-  (format t "~A : START ~A sec~%" n (ros::time-now))
+  (format t "~A : START ~Asec~%" n (ros::time-now))
   (setq c '())
   (dotimes (i n)
     (setq sub_c '())
