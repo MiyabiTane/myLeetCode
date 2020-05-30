@@ -58,37 +58,32 @@ def tokenize(line):
 
 def first_evaluate(tokens):
 
-  def checker():
-    if not tokens[index]['type'] == 'NUMBER':
-        print("your input is not good")
+  def checker(tokens, index):
+    if tokens[index - 1]['type'] != 'NUMBER' or tokens[index + 1]['type'] != 'NUMBER':
+        print('Invalid syntax')
         exit(1)
 
-  new_tokens = [{'type': 'PLUS'}]  # Insert a dummy '+' token
+  tokens.insert(0, {'type': 'PLUS'})  # Insert a dummy '+' token
   index = 0
   while index < len(tokens):
-    if tokens[index]['type'] == 'NUMBER':
-      sub_number = tokens[index]['number']
-      if tokens[min(index + 1, len(tokens) - 1)]['type'] == 'MALTI':
-        index += 2
-        checker()
-        sub_number *= tokens[index]['number']
-        new_tokens.append({'type': 'NUMBER', 'number': sub_number})
-      elif tokens[min(index + 1, len(tokens) - 1)]['type'] == 'DEVIS':
-        index += 2
-        checker()
-        if not tokens[index]['number'] == 0:
-          sub_number /= tokens[index]['number'] 
-        else:
-          print("you cannot devide by 0")
-          exit()
-        new_tokens.append({'type': 'NUMBER', 'number': sub_number})
-      else:
-        new_tokens.append(tokens[index])
+    if tokens[index]['type'] == 'MALTI':
+      checker(tokens, index)
+      new_number = tokens.pop(index - 1)['number'] * tokens.pop(index)['number']
+      tokens.insert(index - 1, {'type': 'NUMBER', 'number': new_number}) 
+      tokens.pop(index)
+    elif tokens[index]['type'] == 'DEVIS':
+      checker(tokens, index)
+      if tokens[index + 1]['number'] == 0:
+        print("cannot devide by 0")
+        exit(1)
+      new_number = tokens.pop(index - 1)['number'] / tokens.pop(index)['number']
+      tokens.insert(index - 1, {'type': 'NUMBER', 'number': new_number})
+      tokens.pop(index)
     else:
-      new_tokens.append(tokens[index])
-    index += 1
-  #print(new_tokens)
-  return new_tokens
+      index += 1 
+    
+  #print(tokens)
+  return tokens
 
 
 def second_evaluate(new_tokens):
@@ -135,9 +130,11 @@ def runTest():
   test("3-14+4.0")
   test("2*3")
   test("4.2*9")
+  test("2*2*2")
   test("3*5.9+2")
   test("6.0-4*2")
   test("8/9")
+  test("6/3.0/4")
   test("6.0/4")
   test("4*5-7.0/3+2")
   test("3/0")
