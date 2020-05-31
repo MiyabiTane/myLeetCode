@@ -135,10 +135,11 @@ def runTest():
   test("6.0-4*2")
   test("8/9")
   test("6/3.0/4")
-  test("6.0/4")
+  test("2*3*4/5")
+  test("2*4.0/2.1+2.5*14")
   test("4*5-7.0/3+2")
-  test("3/0")
   test("3+2+4.0*4-4/2.0")
+  test("3/0")
   print("==== Test finished! ====\n")
 
 
