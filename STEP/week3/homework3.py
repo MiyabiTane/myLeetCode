@@ -210,8 +210,7 @@ runTest()
 while True:
   print('> ', end="")
   line = input()
-  tokens = tokenize(line)
-  new_tokens = first_evaluate(tokens)
-  answer = second_evaluate(new_tokens)
+  actualAnswer = evaluate('(' + line + ')')
+  answer = eval(line)
   print("answer = %f\n" % answer)
 
