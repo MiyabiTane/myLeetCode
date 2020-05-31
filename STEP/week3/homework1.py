@@ -56,7 +56,7 @@ def tokenize(line):
   return tokens
 
 
-def first_evaluate(tokens):
+def firstEvaluate(tokens):
 
   def checker(tokens, index):
     if tokens[index - 1]['type'] != 'NUMBER' or tokens[index + 1]['type'] != 'NUMBER':
@@ -86,7 +86,7 @@ def first_evaluate(tokens):
   return tokens
 
 
-def second_evaluate(new_tokens):
+def secondEvaluate(new_tokens):
   answer = 0
   index = 1
   while index < len(new_tokens):
@@ -107,8 +107,8 @@ def test(line):
     print("please input some numbers")
     return None
   tokens = tokenize(line)
-  new_tokens = first_evaluate(tokens)
-  actualAnswer = second_evaluate(new_tokens)
+  new_tokens = firstEvaluate(tokens)
+  actualAnswer = secondEvaluate(new_tokens)
   expectedAnswer = eval(line)
   if abs(actualAnswer - expectedAnswer) < 1e-8:
     print("PASS! (%s = %f)" % (line, expectedAnswer))
