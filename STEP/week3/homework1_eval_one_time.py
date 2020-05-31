@@ -1,32 +1,49 @@
 def readNumber(line, index):
 
-    def helper(line, index):
-        number = 0
-        while index < len(line) and line[index].isdigit():
-            number = number * 10 + int(line[index])
-            index += 1
-        if index < len(line) and line[index] == '.':
-            index += 1
-            keta = 0.1
+    def helper(line, index, number):
+
+        def calcNumber(line, index):
+            number = 0
             while index < len(line) and line[index].isdigit():
-                number += int(line[index]) * keta
-                keta /= 10
+                number = number * 10 + int(line[index])
                 index += 1
-        if index < len(line) and line[index] == '*':
+            if index < len(line) and line[index] == '.':
+                index += 1
+                keta = 0.1
+                while index < len(line) and line[index].isdigit():
+                    number += int(line[index]) * keta
+                    keta /= 10
+                    index += 1
+            return number, index
+
+        calc_number, index = calcNumber(line, index)
+        number += calc_number
+        
+        if index >= len(line):
+            return number, index
+
+        if line[index] == '*':
             index += 1
-            sub_number, index = helper(line, index)
+            sub_number, index = calcNumber(line, index)
             number *= sub_number
-        if index < len(line) and line[index] == '/':
+            number, index = helper(line, index, number)
+            return number, index
+
+        if  line[index] == '/':
             index += 1
-            sub_number, index = helper(line, index)
+            sub_number, index = calcNumber(line, index)
             if sub_number == 0:
                 print("cannot devide by zero")
                 exit(1)
             number /= sub_number
-
+            number, index = helper(line, index, number)
+            return number, index
+        
         return number, index
 
-    number, index = helper(line, index)   
+        
+
+    number, index = helper(line, index, 0)   
     token = {'type': 'NUMBER', 'number': number}
     return token, index
 
