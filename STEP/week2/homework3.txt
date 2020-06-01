@@ -1,0 +1,32 @@
+宿題３
+
+＜考え方１＞:homework4_using_two_dicts.py
+以下のような２つの辞書を用意します。
+・辞書１＜cache＞
+	key : URL, value : contents とする辞書
+・辞書２＜lookup＞
+	key : URL, value : [一つ前のURL, 一つ後ろのURL]（該当するURLが存在しない時はNoneとする）とする
+	
+最古、最新のurlはそれぞれhead, tailに格納しておきます。これらの初期値はNoneになっています。
+
+例えば、既にcache内にあるURL（urlAとします）が閲覧された時、まずlookupを使ってそのURLの前後に閲覧されたURL（それぞれpre, nxtとします）を調べます。そして、pre, nxt のlookupのvalueをurlAを除いたものに更新します。つまり、lookup[pre] = [そのまま, nxt]、lookup[nxt] = [pre, そのまま]とします。さらに、tail, urlAのlookup情報も lookup[tail] = [そのまま,urlA]、lookup[urlA] = [tail, None]のように更新します。
+
+cacheが満タンの時に、cache内に存在しないURLが入ってきた時はlookup[head]の情報を使って同じようにheadを取り除いた新たなlookupを作成し、urlAを後ろに追加します。そしてheadとtailを書き換えます。
+
+しかし、この方法では最新のURLは簡単に調べられますが（cache[tail]）、先頭と末尾以外の順番の情報を手に入れるには複雑な計算が必要になってしまうことに気がつきました。
+
+cache_two_dict.pyではcacheのチェックをする関数を一番最近閲覧されたURLを返す関数（get_latest_page）に書き換えさせて頂きました、すみません。
+
+
+かなり時間を割いて考えたのが方法１ですが、pythonのリストにlist.remove()という機能があることに気づいて考え方２も実装しました。
+
+＜考え方２＞:homework4_using_list_and_dict.py
+・urlの順番を保持するリスト(order)とurlとcontentsのペアの情報を格納する辞書（cache）を用意します。
+
+以下、cacheが満タンの場合を想定します。
+
+与えられたURL(urlC)がcache内に存在しない時、orderの末尾のurl(urlD)を消して先頭にurlCを入れます。cacheについてもurlCを除いてurlDを追加します。cacheについては順番を考慮する必要はないです。
+
+urlCがcache内に既に存在した時はorderからurlCを取り出して先頭に入れ直します。この時、リストからurlCを取り出しても他のurlの順番は変わらないようにします。cacheについては何も操作しません。
+
+最近閲覧されたURLの一覧を最新順で知りたい時はorderを返せば良いです。
