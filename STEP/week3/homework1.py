@@ -139,18 +139,18 @@ def runTest():
   test("2*4.0/2.1+2.5*14")
   test("4*5-7.0/3+2")
   test("3+2+4.0*4-4/2.0")
-  test("3/0")
+  #test("3/0")
   print("==== Test finished! ====\n")
 
 
 runTest()
 
-"""
+
 while True:
   print('> ', end="")
   line = input()
   tokens = tokenize(line)
-  new_tokens = first_evaluate(tokens)
-  answer = second_evaluate(new_tokens)
+  new_tokens = firstEvaluate(tokens)
+  answer = secondEvaluate(new_tokens)
   print("answer = %f\n" % answer)
-"""
+
