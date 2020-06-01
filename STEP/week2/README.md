@@ -67,7 +67,10 @@ Linuxで実行するとpython、EusLispともに定数係数が約1になって�
 python3 ./cache_using_two_dicts.py
 ```
 ただし、この方法では一番最後に見たURLは簡単に取り出せるが、最近見たURL複数個を見た順に取り出すことがO(1)でできない。<br>
-<font color="Tomato">▷双方向リスト(Doubly-Linked List)を使えば同じ内容をうまく実装することができる<br>▷homework4_double_linked_list.pyで実装</font>
+<font color="Red">- - - - - - - - - - </font><br>
+▷[Alexさんのプログラム](https://github.com/xxandy/StudyingPython/blob/master/xdict/hw.py)を参考にして辞書一つで実装してみた▶︎homework4_using_one_dict.py<br>
+▷双方向リスト(Doubly-Linked List)を使えば同じ内容をうまく実装することができる▶︎homework4_double_linked_list.py<br>
+<font color="Red">- - - - - - - - - - </font><br>
 
 
 **リストと辞書を使う方法**<br>
@@ -75,8 +78,9 @@ python3 ./cache_using_two_dicts.py
 ```
 python3 ./cache_using_list_and_dict.py
 ```
-~~この方法なら全てO(1)で実行できる（と思う）。<br>~~
-<font color="Tomato">▷insert(), remove()は実はO(N)。よってこの方法はNG</font>
-
+~~この方法なら全てO(1)で実行できる（と思う）。~~<br>
+<font color="Red">- - - - - - - - - - </font><br>
+▷insert(), remove()は実はO(N)。よってこの方法はNG<br>
+<font color="Red">- - - - - - - - - - </font><br>
 
 
