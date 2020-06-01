@@ -20,16 +20,19 @@ begin = time.time()
 
 # Write code to calculate C = A * B                  #
 # (without using numpy librarlies e.g., numpy.dot()) #
-for i in range(n):
-    for j in range(n):
-        for k in range(n):
-            c[i][j] += a[i][k]*b[k][j] 
+def calcMatMal(n):
+    for i in range(n):
+        for j in range(n):
+            for k in range(n):
+                c[i][j] += a[i][k]*b[k][j] 
 
+calcMatMal(n)
 end = time.time()
 print("time: %.6f sec" % (end - begin))
 
 # ALEXNOTE: I reviewed this. Looked simple and effective.
 #           One suggestion: could you make the matrix multiplication code reusable?
+# TANEMOTO: I have made function "calcMatMal".
 
 # Print C for debugging. Comment out the print before measuring the execution time.
 total = 0
