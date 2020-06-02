@@ -66,10 +66,12 @@ class Cache:
             self.entryDict[url] = newEntry
             #cacheが溢れてしまう場合
             #ALEXNOTE: 辞書のlen()でサイズの管理して、よかったね。
+            #はい！あと、消してしまうので元のheadの更新はしなくても良いのかなと思いました。
             if len(self.entryDict) > self.n:
                 del self.entryDict[self.head.url]
-                self.get_pages()
-                ＃ALEXNOTE：　上記のget_pagesはデバッグ用でしたか。
+                #self.get_pages()
+                #ALEXNOTE：　上記のget_pagesはデバッグ用でしたか。
+                #すみませんデバッグ用です、消し忘れました。
                 self.head = self.head.next
                 self.head.prev = None
                 
