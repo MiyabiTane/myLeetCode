@@ -109,6 +109,11 @@ def test(line):
   tokens = tokenize(line)
   new_tokens = firstEvaluate(tokens)
   actualAnswer = secondEvaluate(new_tokens)
+  # ALEXNOTE: I like this solution best. However:  does it ever make sense to invoke firstEvaluate without secondEvaluate?
+  #           Or does it make sense to call firstEvaluate twice in a row?
+  #           Probably not... therefore, for modularity, it makes sense to add a wrapper function, whose only purpose is
+  #           to tokenize, then call firstEvaluate() then call secondEvaluate()
+  
   expectedAnswer = eval(line)
   if abs(actualAnswer - expectedAnswer) < 1e-8:
     print("PASS! (%s = %f)" % (line, expectedAnswer))
@@ -139,6 +144,8 @@ def runTest():
   test("2*4.0/2.1+2.5*14")
   test("4*5-7.0/3+2")
   test("3+2+4.0*4-4/2.0")
+  # ALEXNOTE:  how about invalid punctuation (++ or **) ?
+  #            also, how about fractional numbers without a leading zero -  such as .25  (are these accepted?)
   #test("3/0")
   print("==== Test finished! ====\n")
 
