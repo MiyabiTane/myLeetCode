@@ -35,6 +35,8 @@ def readDevis(line, index):
 
 
 def tokenize(line):
+  #when input contains space, remove 
+  line = line.replace(' ','')
   tokens = []
   index = 0
   while index < len(line):
@@ -162,7 +164,8 @@ def runTest():
   test(".35+3.0")
   test("9.0*.57+3/2")
   test("4+3-.95/2*1.0")
-  #test("++2-3")
+  test("3+2+ 4.0*4- 4/2.0")
+  test("++2-3")
   #test("3//2*3")
   #test("3/0")
   print("==== Test finished! ====\n")
