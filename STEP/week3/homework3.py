@@ -48,6 +48,10 @@ def tokenize(line):
       (token, index) = readMalti(line, index)
     elif line[index] == '/':
       (token, index) = readDevis(line, index)
+      
+    # ALEXNOTE:  Doesn't it make sense to turn  '('  and ')' into Tokens?
+    #            I think that would imporove code clarity.  It's also a more
+    #            standard procedure for parsers.
     else:
       print('Invalid character found: ' + line[index])
       exit(1)
@@ -136,6 +140,8 @@ def evaluate(line):
   """
   stack = []
   index = 0
+  # ALEXNOTE: this logic can be simpler if you use tokens for ( and ).
+  #           I do think it's good to use stack to avoid recursion, though.
   while index < len(line):
     if line[index] == '(':
       stack.append(['(', index])
@@ -197,6 +203,7 @@ def runTest():
   test("(2+3)*2")
   test("2.3*(3-1)")
   test("((2.3+4)+5)*4")
+  # ALEXNOTE: good test - parenthesis within parenthesis
   test("3/(2+3)*4")
   test("5+2*6.3/(3-0.2+1*4)+3.2")
   #test("(3/((4-2))")
