@@ -171,6 +171,7 @@ def runTest():
     test("((2.3+4)+5)*4")
     test("3/(2+3)*4")
     test("5+2*6.3/(3-0.2+1*4)+3.2")
+    # ALEXNOTE: valid for the other exercises too: maybe it's good to test with embedded spaces as well
     #test("(3/((4-2))")
     #test("3/0")
     print("==== Test finished! ====\n")
