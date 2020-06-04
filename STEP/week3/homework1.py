@@ -48,6 +48,10 @@ def tokenize(line):
       (token, index) = readMalti(line, index)
     elif line[index] == '/':
       (token, index) = readDevis(line, index)
+    #when input is fractional numbers without a leading zero
+    elif line[index] == ".":
+      line = line[:index] + '0' + line[index:]
+      (token, index) = readNumber (line, index)
     else:
       print('Invalid character found: ' + line[index])
       exit(1)
@@ -90,6 +94,10 @@ def secondEvaluate(new_tokens):
   answer = 0
   index = 1
   while index < len(new_tokens):
+    if new_tokens[index]['type'] == 'PLUS' or new_tokens[index]['type'] == 'MINUS':
+      if new_tokens[index+1]['type'] != 'NUMBER':
+        print("Invalid syntax")
+        exit(1)
     if new_tokens[index]['type'] == 'NUMBER':
       if new_tokens[index - 1]['type'] == 'PLUS':
         answer += new_tokens[index]['number']
@@ -102,13 +110,18 @@ def secondEvaluate(new_tokens):
   return answer
 
 
+def tokenToNumber(tokens):
+  new_tokens = firstEvaluate(tokens)
+  actualAnswer = secondEvaluate(new_tokens)
+  return actualAnswer
+
+
 def test(line):
   if len(line) == 0:
     print("please input some numbers")
     return None
   tokens = tokenize(line)
-  new_tokens = firstEvaluate(tokens)
-  actualAnswer = secondEvaluate(new_tokens)
+  actualAnswer = tokenToNumber(tokens)
   # ALEXNOTE: I like this solution best. However:  does it ever make sense to invoke firstEvaluate without secondEvaluate?
   #           Or does it make sense to call firstEvaluate twice in a row?
   #           Probably not... therefore, for modularity, it makes sense to add a wrapper function, whose only purpose is
@@ -146,6 +159,11 @@ def runTest():
   test("3+2+4.0*4-4/2.0")
   # ALEXNOTE:  how about invalid punctuation (++ or **) ?
   #            also, how about fractional numbers without a leading zero -  such as .25  (are these accepted?)
+  test(".35+3.0")
+  test("9.0*.57+3/2")
+  test("4+3-.95/2*1.0")
+  #test("++2-3")
+  #test("3//2*3")
   #test("3/0")
   print("==== Test finished! ====\n")
 
