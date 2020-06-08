@@ -1,6 +1,7 @@
 import argparse
 from readGraph import readGraph
 
+
 def canReach(start_name, target_name, nick_ind_dic, ind_node_dic):
     """
     check if start can reach target 
@@ -12,28 +13,30 @@ def canReach(start_name, target_name, nick_ind_dic, ind_node_dic):
     """
     start_index = nick_ind_dic[start_name]
     target_index = nick_ind_dic[target_name]
-    qu = [start_index]
+    
 
-    visited_edge = 0
-    while qu:
-        node = ind_node_dic[qu.pop(0)]
-        if node.visited == False:
-            for ad in node.adjacency:
-                if ad == target_index:
-                    print(visited_edge)
+    def check(cur_index, target_index, visited_edge):
+        if cur_index == target_index:
+            print(visited_edge)
+            return True
+        cur_node = ind_node_dic[cur_index]
+        cur_node.visited = True
+        visited_edge += 1
+        for ad in cur_node.adjacency:
+            if ind_node_dic[ad].visited == False:
+                #print(ad)
+                if check(ad, target_index, visited_edge):
                     return True
-                else:
-                    qu.append(ad)
-            node.visited = True 
-            visited_edge += 1   
-    return False
+        return False
+    
+    return check(start_index, target_index, 0)
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--links", required = "True")
-parser.add_argument("--nicknames", required = "True")
-parser.add_argument("--start", required = "True")
-parser.add_argument("--target", required = "True")
+parser.add_argument("--links", required="True")
+parser.add_argument("--nicknames", required="True")
+parser.add_argument("--start", required="True")
+parser.add_argument("--target", required="True")
 args = parser.parse_args()
 
 links_path = args.links
