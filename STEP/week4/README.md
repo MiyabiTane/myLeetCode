@@ -17,7 +17,7 @@ adrianからjohnnieにたどり着けるか調べるのにいくつの辺を通�
 
 幅優先探索
 ```
-./homework1_BFS.py --links links.txt --nicknames nicknames.txt --start "adrian" --target "johnnie"
+python3 ./homework1_BFS.py --links data/links.txt --nicknames data/nicknames.txt --start "adrian" --target "johnnie" 
 ```
 ```
 3
@@ -26,7 +26,7 @@ True
 
 深さ優先探索
 ```
-python3 ./homework1_DFS.py --links links.txt --nicknames nicknames.txt --start "adrian" --target "johnnie"
+python3 ./homework1_DFS.py --links data/links.txt --nicknames data/nicknames.txt --start "adrian" --target "johnnie" 
 ```
 ```
 37
@@ -34,3 +34,14 @@ True
 ```
 たどり着けた！<br>
 深さ優先探索では幅優先探索に比べてだいぶ遠回りしてしまっていることがわかった。<br>
+
+### 宿題１−２<br>
+他に何か面白いことをしてみよう<br>
+
+人間ビンゴの順位とページランクの順位の相関関係を調べてみた。<br>
+```
+python3 ./searh_correlation.py --links data/links.txt --nicknames data/nicknames.txt --bingo data/bingo.txt
+```
+で実行できる。<br>
+
+結果を含む詳細を[ドキュメント](https://docs.google.com/document/d/101H1gHDeq4fV6CBKD3u2ReETt6Kwp4kLj4-WcYQw9JQ/edit#)にまとめた。<br>

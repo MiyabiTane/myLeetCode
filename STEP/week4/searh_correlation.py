@@ -2,9 +2,14 @@ import argparse
 from readGraph import readGraph
 import numpy as np
 import matplotlib.pyplot as plt
+import os
 
-#ランク付けして上位５人がビンゴの人かどうかを調べる
+
 def PageRank(nick_ind_dic, ind_node_dic):
+    """
+    output  value_list : index -> nick_ind_dec's index
+                       : store each person's pagerank
+    """
 
     def makeValueList(ind_node_dic):
         value_list = []
@@ -14,6 +19,7 @@ def PageRank(nick_ind_dic, ind_node_dic):
 
 
     def finishChecker(pre_value_list, aft_value_list):
+        #収束判定
         for v1, v2 in zip(pre_value_list, aft_value_list):
             if abs(v1 - v2) >= 1:
                 return False
@@ -33,7 +39,7 @@ def PageRank(nick_ind_dic, ind_node_dic):
                     ad_node = ind_node_dic[ad]
                     ad_node.value += give_value
         aft_value_list = makeValueList(ind_node_dic)
-        #valueが変化しなかったら計算をやめる
+        #valueの変化がほとんどなくなれば収束したとみなす
         if finishChecker(pre_value_list, aft_value_list):
             print("value converged!")
             return aft_value_list
@@ -56,6 +62,8 @@ def showResult(value_list, ind_node_dic, bingo_path):
 
 
     def searchCorrelation(rank_list, bingo_list):
+        os.makedirs("images", exist_ok=True)
+
         plot_x = [i for i in range(5)]
         plot_y = []
         rank_list = np.array(rank_list)
