@@ -45,3 +45,12 @@ python3 ./searh_correlation.py --links data/links.txt --nicknames data/nicknames
 で実行できる。<br>
 
 結果を含む詳細を[ドキュメント](https://docs.google.com/document/d/101H1gHDeq4fV6CBKD3u2ReETt6Kwp4kLj4-WcYQw9JQ/edit#)にまとめた。<br>
+
+
+### 宿題２<br>
+Wikipediaのリンク構造を使って何か面白いことを見つけよう<br>
+
+「バドミントン」というページからスタートして、「バドミントン」という言葉を含むページだけを使っていくつのページと繋がることができるか、また、いくつ先のページまでアクセスできるのかを調べた。<br>
+
+データが重いのでColabでの実行がお勧め。<br>
+結果を含む詳細は[ドキュメント](https://docs.google.com/document/d/104tLN8cPxY65JyzRiGLRyN66hQHrlTlumFa15vEG2d8/edit#)にまとめた。
