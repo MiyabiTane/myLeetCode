@@ -35,6 +35,8 @@ def readGraph(links_path, nicknames_path):
             break
         index = int(read_word[0])
         link = int(read_word[1][:-1])
+        # ALEXNOTE:  could gain efficiency by having nodes link direcly to each other, rather than a list
+        #            of numeric ids.  
         ind_node_dic[index].adjacency.append(link)
     #print(nick_ind_dic)
     #print(ind_node_dic[0].visited)

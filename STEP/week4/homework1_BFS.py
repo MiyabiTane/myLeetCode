@@ -1,5 +1,6 @@
 import argparse
 from readGraph import readGraph
+# ALEXNOTE: nice that you imported the common code!
 
 def canReach(start_name, target_name, nick_ind_dic, ind_node_dic):
     """
