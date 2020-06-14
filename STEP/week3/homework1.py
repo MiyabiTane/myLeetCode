@@ -37,6 +37,10 @@ def readDevis(line, index):
 def tokenize(line):
   #when input contains space, remove 
   line = line.replace(' ','')
+  # ALEXNOTE:  good trick, remove all the spaces beforehand without changing the tokenizer.
+  #            mind you that this is a trade-off:   it requires more computation to do it this way,
+  #            as replace() will traverse the entire string.   Not wrong, just something to keep in mind
+  #           - many times, it is worth it to spend more computing time to keep the program simple.
   tokens = []
   index = 0
   while index < len(line):
@@ -53,6 +57,8 @@ def tokenize(line):
     #when input is fractional numbers without a leading zero
     elif line[index] == ".":
       line = line[:index] + '0' + line[index:]
+      # ALEXNOTE: the statement above is another example of a program simplification which is
+      #           relatively expensive: it is re-creating the entire input sting.
       (token, index) = readNumber (line, index)
     else:
       print('Invalid character found: ' + line[index])
@@ -178,6 +184,7 @@ while True:
   print('> ', end="")
   line = input()
   tokens = tokenize(line)
+  # ALEXNOTE: did you mean to call tokenToNumber() below?
   new_tokens = firstEvaluate(tokens)
   answer = secondEvaluate(new_tokens)
   print("answer = %f\n" % answer)
