@@ -159,6 +159,8 @@ def evaluate(tokens):
   index = 0
   # ALEXNOTE: this logic can be simpler if you use tokens for ( and ).
   #           I do think it's good to use stack to avoid recursion, though.
+  
+  # ALEXNOTE - one more time -  Very nice !  using tokens for the parenthesis makes it clearer to read!
   while index < len(tokens):
     if tokens[index]['type'] == 'LEFT':
       stack.append(['LEFT', index])
