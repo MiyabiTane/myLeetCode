@@ -59,9 +59,20 @@ a :  [1, 2]
 
 以上の理由より、aは関数内の計算の影響を受ける。また、それがbと異なった値になる。<br>
 
-<img height="400" src="./images/1.JPG">
-<img height="400" src="./images/2.JPG">
-<img height="400" src="./images/3.JPG">
-<img height="400" src="./images/4.JPG">
-<img height="400" src="./images/5.JPG">
-
+<table>
+<tr>
+<td><img height="400" src="./images/1.JPG"></td>
+<td><img height="400" src="./images/2.JPG"></td>
+</tr>
+</table>
+<table>
+<tr>
+<td><img height="400" src="./images/3.JPG"></td>
+<td><img height="400" src="./images/4.JPG"></td>
+</tr>
+</table>
+<table>
+<tr>
+<td><img height="400" src="./images/5.JPG"></td>
+</tr>
+</table>
