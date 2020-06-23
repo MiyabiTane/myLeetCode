@@ -358,6 +358,17 @@ void test() {
   for (int i = 0; i < 100; i++) {
     my_free(ptrs[i]);
   }
+  for (int i = 0; i < 100; i++) {
+    void* ptr = my_malloc(i*10);
+    my_free(ptr);
+  }
+  void* ptrs2[100];
+  for (int i = 0; i < 100; i++) {
+    ptrs2[i] = my_malloc(i*10);
+  }
+  for (int i = 0; i < 100; i++) {
+    my_free(ptrs2[i]);
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
