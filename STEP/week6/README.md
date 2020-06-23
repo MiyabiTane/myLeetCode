@@ -151,11 +151,11 @@ Utilization: 15% => 24%
 ＜方法３＞
 Best-fitと空白連結の方法（方法１）を組み合わせた。Best-fitでは、フィットするものがなかった時、一番大きさが近いものを取ってくるようなプログラムにしようとしたらうまくいかなかった（多分凡ミス）ので、フィットするものがなかったらFirst-fitに切り替えるようにした。結果的にこれが時間短縮に繋がった気がする。<br>
 また、空白連結の際に、free_headの方に連結するような仕組みにしたため、first-fitをする際に空いている領域をすぐに見つける確率が高くなっており、それも高速になった理由の一つかもしれない。<br>
-<img height="400" src="./images/6.JPG"><br>
 ```
-gcc malloc_unite_free_munmap.c -lm
+gcc malloc_unite_free_best_fit.c -lm
 ./a.out
 ```
+<img height="400" src="./images/6.JPG"><br>
 結果
 ```
 Challenge 1: simple malloc => my malloc
