@@ -240,7 +240,7 @@ void my_add_to_free_list(simple_metadata_t* metadata) {
     if (metadata == next_metadata){ //if next_matadata is free, unite.
       simple_metadata_t* cur_head = simple_heap.free_head;
       cur_head->size = cur_head->size + metadata->size + sizeof(simple_metadata_t); //unite
-      prev->next = metadata->next; //remove metadata 
+      prev->next = metadata->next; //remove metadata   
     }
   }  
 }
