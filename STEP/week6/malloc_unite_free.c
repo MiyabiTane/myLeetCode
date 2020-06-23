@@ -225,19 +225,24 @@ void my_add_to_free_list(simple_metadata_t* metadata) {
   metadata->next = simple_heap.free_head;
   simple_heap.free_head = metadata;
 
-  simple_metadata_t* next_metadata = metadata + 2;
+  void* ptr = metadata + 1;
+  size_t size = metadata->size;
+  void* next_metadata = ((char*)ptr + size);
+  //     | metadata | free slot | metadata | ... 
+  //     ^          ^           ^
+  //     metadata   ptr         next_metadata
+  //                <----------->
+  //                     size
   simple_metadata_t* prev = NULL;
-
   while (metadata){ //check if next_metadata is free
     prev = metadata;
     metadata = metadata->next;
     if (metadata == next_metadata){ //if next_matadata is free, unite.
-      simple_heap.free_head->size = simple_heap.free_head->size + metadata->size; //unite
+      simple_metadata_t* cur_head = simple_heap.free_head;
+      cur_head->size = cur_head->size + metadata->size + sizeof(simple_metadata_t); //unite
       prev->next = metadata->next; //remove metadata 
     }
-  }
-
-  
+  }  
 }
 
 // This is called only once at the beginning of each challenge.
