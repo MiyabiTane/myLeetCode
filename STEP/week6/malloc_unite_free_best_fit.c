@@ -152,6 +152,8 @@ void* simple_malloc(size_t size) {
     //            buffer_size
     size_t buffer_size = 4096;
     simple_metadata_t* metadata = (simple_metadata_t*)mmap_from_system(buffer_size);
+    // ALEXNOTE: must check this call for error, and avoid the recursive call 
+    //           if there is an error
     metadata->size = buffer_size - sizeof(simple_metadata_t);
     metadata->next = NULL;
     // Add the memory region to the free list.
