@@ -154,6 +154,11 @@ void* simple_malloc(size_t size) {
     simple_metadata_t* metadata = (simple_metadata_t*)mmap_from_system(buffer_size);
     // ALEXNOTE: must check this call for error, and avoid the recursive call 
     //           if there is an error
+    // I am sorry, I cannot find the error message which mmap returns.
+    // Is this right? ↓
+    // if (ERROR_MESSAGE){
+    //    exit(0);   
+    // }
     metadata->size = buffer_size - sizeof(simple_metadata_t);
     metadata->next = NULL;
     // Add the memory region to the free list.
@@ -271,8 +276,8 @@ void* my_malloc(size_t size) {
     prev = metadata;
     metadata = metadata->next;
   }
-  simple_metadata_t* metadata_best = simple_heap.free_head;
-  simple_metadata_t* prev_best = NULL;
+  simple_metadata_t* metadata_best = metadata;
+  simple_metadata_t* prev_best = prev;
   // if there are Best-fit region select best-fit
   while (metadata_best){
     if (metadata_best->size == size){
@@ -283,7 +288,7 @@ void* my_malloc(size_t size) {
     prev_best = metadata_best;
     metadata_best = metadata_best->next;
   }
-  
+ 
   if (!metadata) {
     // There was no free slot available. We need to request a new memory region
     // from the system by calling mmap_from_system().
