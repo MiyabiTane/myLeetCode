@@ -261,6 +261,11 @@ void my_initialize() {
 void* my_malloc(size_t size) {
   simple_metadata_t* metadata = simple_heap.free_head;
   simple_metadata_t* prev = NULL;
+  
+  // ALEXNOTE: the consecutive loops to find the first and best
+  //           are fairly costly (order 2N,  N being the number of entries)...
+  //           That aside, what if the first fit is the best fit
+  
   //First-fit
   while (metadata && metadata->size < size){
     prev = metadata;
@@ -290,6 +295,7 @@ void* my_malloc(size_t size) {
     //            buffer_size
     size_t buffer_size = 4096;
     simple_metadata_t* metadata = (simple_metadata_t*)mmap_from_system(buffer_size);
+    //  ALEXNOTE: didnt check for errors before recursing (same as sample code, I understand)
     metadata->size = buffer_size - sizeof(simple_metadata_t);
     metadata->next = NULL;
     // Add the memory region to the free list.
