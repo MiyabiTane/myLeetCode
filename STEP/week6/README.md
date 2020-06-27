@@ -63,6 +63,7 @@ a :  [1, 2]
 <img width="700" src="./images/1.jpeg"><br>
 <img width="700" src="./images/2.jpeg"><br>
 <img width="700" src="./images/3.jpeg"><br>
+<img height="270" src="./images/4.jpeg"><br>
 
 
 ### 宿題２<br>
@@ -146,7 +147,7 @@ Best-fitと空白連結の方法（方法１）を組み合わせた。Best-fit�
 gcc malloc_unite_free_best_fit.c -lm
 ./a.out
 ```
-<img height="450" src="./images/4.jpeg"><br>
+<img height="450" src="./images/5.jpeg"><br>
 結果
 ```
 Challenge 1: simple malloc => my malloc

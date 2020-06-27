@@ -154,11 +154,12 @@ void* simple_malloc(size_t size) {
     simple_metadata_t* metadata = (simple_metadata_t*)mmap_from_system(buffer_size);
     // ALEXNOTE: must check this call for error, and avoid the recursive call 
     //           if there is an error
-    // I am sorry, I cannot find the error message which mmap returns.
-    // Is this right? ↓
-    // if (ERROR_MESSAGE){
-    //    exit(0);   
-    // }
+    /*
+    newArea = mmap(buffer_size);
+    if (newArea == MAP_FAILED){
+      return NULL; //error code to user
+    }
+    */
     metadata->size = buffer_size - sizeof(simple_metadata_t);
     metadata->next = NULL;
     // Add the memory region to the free list.
