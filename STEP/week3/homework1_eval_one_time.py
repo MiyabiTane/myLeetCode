@@ -1,5 +1,7 @@
 def readNumber(line, index):
 
+    # ALEXNOTE: I thought this is good use of helper functions.
+    #           But I still prefer the other solution
     def helper(line, index, number):
 
         def calcNumber(line, index):

@@ -1,0 +1,25 @@
+def foo(b):
+    print('id(b): %#08x' % id(b))
+    print('id(b[0]): %#08x' % id(b[0]))
+    b.append(2)
+    print('id(b[0]): %#08x' % id(b[0]))
+    print('id(b[1]): %#08x' % id(b[1]))
+    print('id(b): %#08x' % id(b))
+    b = b + [3]
+    print('id(b): %#08x' % id(b))
+    print('id(b[0]): %#08x' % id(b[0]))
+    print('id(b[1]): %#08x' % id(b[1]))
+    print('id(b[2]): %#08x' % id(b[2]))
+    b.append(4)
+    print('id(b): %#08x' % id(b))
+    print('id(b[0]): %#08x' % id(b[0]))
+    print('id(b[1]): %#08x' % id(b[1]))
+    print('id(b[2]): %#08x' % id(b[2]))
+    print('id(b[3]): %#08x' % id(b[3]))
+    print("b : ", b)
+
+a = [1]
+print('id(a): %#08x' % id(a))
+foo(a)
+print('id(a): %#08x' % id(a))
+print("a : ", a)

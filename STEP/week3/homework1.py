@@ -35,6 +35,12 @@ def readDevis(line, index):
 
 
 def tokenize(line):
+  #when input contains space, remove 
+  line = line.replace(' ','')
+  # ALEXNOTE:  good trick, remove all the spaces beforehand without changing the tokenizer.
+  #            mind you that this is a trade-off:   it requires more computation to do it this way,
+  #            as replace() will traverse the entire string.   Not wrong, just something to keep in mind
+  #           - many times, it is worth it to spend more computing time to keep the program simple.
   tokens = []
   index = 0
   while index < len(line):
@@ -48,6 +54,12 @@ def tokenize(line):
       (token, index) = readMalti(line, index)
     elif line[index] == '/':
       (token, index) = readDevis(line, index)
+    #when input is fractional numbers without a leading zero
+    elif line[index] == ".":
+      line = line[:index] + '0' + line[index:]
+      # ALEXNOTE: the statement above is another example of a program simplification which is
+      #           relatively expensive: it is re-creating the entire input sting.
+      (token, index) = readNumber (line, index)
     else:
       print('Invalid character found: ' + line[index])
       exit(1)
@@ -90,6 +102,10 @@ def secondEvaluate(new_tokens):
   answer = 0
   index = 1
   while index < len(new_tokens):
+    if new_tokens[index]['type'] == 'PLUS' or new_tokens[index]['type'] == 'MINUS':
+      if new_tokens[index+1]['type'] != 'NUMBER':
+        print("Invalid syntax")
+        exit(1)
     if new_tokens[index]['type'] == 'NUMBER':
       if new_tokens[index - 1]['type'] == 'PLUS':
         answer += new_tokens[index]['number']
@@ -102,13 +118,23 @@ def secondEvaluate(new_tokens):
   return answer
 
 
+def tokenToNumber(tokens):
+  new_tokens = firstEvaluate(tokens)
+  actualAnswer = secondEvaluate(new_tokens)
+  return actualAnswer
+
+
 def test(line):
   if len(line) == 0:
     print("please input some numbers")
     return None
   tokens = tokenize(line)
-  new_tokens = firstEvaluate(tokens)
-  actualAnswer = secondEvaluate(new_tokens)
+  actualAnswer = tokenToNumber(tokens)
+  # ALEXNOTE: I like this solution best. However:  does it ever make sense to invoke firstEvaluate without secondEvaluate?
+  #           Or does it make sense to call firstEvaluate twice in a row?
+  #           Probably not... therefore, for modularity, it makes sense to add a wrapper function, whose only purpose is
+  #           to tokenize, then call firstEvaluate() then call secondEvaluate()
+  
   expectedAnswer = eval(line)
   if abs(actualAnswer - expectedAnswer) < 1e-8:
     print("PASS! (%s = %f)" % (line, expectedAnswer))
@@ -139,6 +165,14 @@ def runTest():
   test("2*4.0/2.1+2.5*14")
   test("4*5-7.0/3+2")
   test("3+2+4.0*4-4/2.0")
+  # ALEXNOTE:  how about invalid punctuation (++ or **) ?
+  #            also, how about fractional numbers without a leading zero -  such as .25  (are these accepted?)
+  test(".35+3.0")
+  test("9.0*.57+3/2")
+  test("4+3-.95/2*1.0")
+  test("3+2+ 4.0*4- 4/2.0")
+  test("++2-3")
+  #test("3//2*3")
   #test("3/0")
   print("==== Test finished! ====\n")
 
@@ -150,6 +184,7 @@ while True:
   print('> ', end="")
   line = input()
   tokens = tokenize(line)
+  # ALEXNOTE: did you mean to call tokenToNumber() below?
   new_tokens = firstEvaluate(tokens)
   answer = secondEvaluate(new_tokens)
   print("answer = %f\n" % answer)

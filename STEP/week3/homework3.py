@@ -34,7 +34,18 @@ def readDevis(line, index):
   return token, index + 1
 
 
+def readLeft(line, index):
+  token = {'type': 'LEFT'}
+  return token, index + 1
+
+
+def readRight(line, index):
+  token = {'type': 'RIGHT'}
+  return token, index + 1
+
+
 def tokenize(line):
+  line = line.replace(' ', '')
   tokens = []
   index = 0
   while index < len(line):
@@ -48,6 +59,17 @@ def tokenize(line):
       (token, index) = readMalti(line, index)
     elif line[index] == '/':
       (token, index) = readDevis(line, index)
+    elif line[index] == '(':
+      (token, index) = readLeft(line, index)
+    elif line[index] == ')':
+      (token, index) = readRight(line, index)
+    elif line[index] == '.':
+      line = line[:index] + '0' + line[index:]
+      (token, index) = readNumber(line, index)
+      
+    # ALEXNOTE:  Doesn't it make sense to turn  '('  and ')' into Tokens?
+    #            I think that would imporove code clarity.  It's also a more
+    #            standard procedure for parsers.
     else:
       print('Invalid character found: ' + line[index])
       exit(1)
@@ -105,6 +127,10 @@ def secondEvaluate(new_tokens):
   answer = 0
   index = 1
   while index < len(new_tokens):
+    if new_tokens[index]['type'] == 'PLUS' or new_tokens[index]['type'] == 'MINUS':
+      if new_tokens[index+1]['type'] != 'NUMBER':
+        print("Invalid syntax")
+        exit(1)
     if new_tokens[index]['type'] == 'NUMBER':
       if new_tokens[index - 1]['type'] == 'PLUS':
         answer += new_tokens[index]['number']
@@ -117,18 +143,13 @@ def secondEvaluate(new_tokens):
   return answer
 
 
-def calcNumInParentheses(line):
-  """
-  input : line[str]
-  output : subAnswer[float or int]
-  """
-  tokens = tokenize(line)
+def tokenToNumber(tokens):
   new_tokens = firstEvaluate(tokens)
-  subAnswer = secondEvaluate(new_tokens)
-  return subAnswer
+  actualAnswer = secondEvaluate(new_tokens)
+  return actualAnswer
 
 
-def evaluate(line):
+def evaluate(tokens):
   """
   input : line[str]
     list[0] = '(' and list[-1] = ')'
@@ -136,34 +157,40 @@ def evaluate(line):
   """
   stack = []
   index = 0
-  while index < len(line):
-    if line[index] == '(':
-      stack.append(['(', index])
+  # ALEXNOTE: this logic can be simpler if you use tokens for ( and ).
+  #           I do think it's good to use stack to avoid recursion, though.
+  
+  # ALEXNOTE - one more time -  Very nice !  using tokens for the parenthesis makes it clearer to read!
+  while index < len(tokens):
+    if tokens[index]['type'] == 'LEFT':
+      stack.append(['LEFT', index])
       index += 1
-    elif line[index] == ')':
-      if not stack[-1][0] == '(':
-        print('Invald syntax')
+    elif tokens[index]['type'] == 'RIGHT':
+      if not stack[-1][0] == 'LEFT':
+        print('invalid syntax')
         exit(1)
       left_index = stack.pop()[1]
-      num = calcNumInParentheses(line[left_index + 1: index])
-      if not stack:
-        return num
-      line = line[: left_index] + str(num) + line[index + 1 :]
-      evaluate(line)
-      index = left_index + 1  
+      number = tokenToNumber(tokens[left_index + 1: index])
+      tokens = tokens[: left_index] + tokens[index + 1:]
+      tokens.insert(left_index, {'type': 'NUMBER', 'number': number}) 
+      index = left_index + 1
     else:
       index += 1
-  if not len(stack) == 0:
-    print("Invalid syntax")
+  if not stack:
+    number = tokenToNumber(tokens)
+    return number
+  else:
+    print("invalid syntax")
     exit(1)
-  return num
+  
 
 
 def test(line):
   if len(line) == 0:
     print("please input some numbers")
     return None
-  actualAnswer = evaluate('(' + line + ')')
+  tokens = tokenize(line)
+  actualAnswer = evaluate(tokens)
   expectedAnswer = eval(line)
   if abs(actualAnswer - expectedAnswer) < 1e-8:
     print("PASS! (%s = %f)" % (line, expectedAnswer))
@@ -175,7 +202,7 @@ def test(line):
 # Add more tests to this function :)
 def runTest():
   print("==== Test started! ====")
-  test("")
+  #test("")
   test("1")
   test("1+2")
   test("12+3")
@@ -197,10 +224,12 @@ def runTest():
   test("(2+3)*2")
   test("2.3*(3-1)")
   test("((2.3+4)+5)*4")
+  # ALEXNOTE: good test - parenthesis within parenthesis
   test("3/(2+3)*4")
   test("5+2*6.3/(3-0.2+1*4)+3.2")
   #test("(3/((4-2))")
   #test("3/0")
+  test("(2+.04)*3/(3+4.5)")
   print("==== Test finished! ====\n")
 
 
@@ -210,7 +239,8 @@ runTest()
 while True:
   print('> ', end="")
   line = input()
-  actualAnswer = evaluate('(' + line + ')')
+  tokens = tokenize(line)
+  actualAnswer = evaluate(tokens)
   answer = eval(line)
   print("answer = %f\n" % answer)
 
