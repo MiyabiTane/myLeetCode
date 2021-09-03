@@ -1,18 +1,13 @@
 def removeDuplicates(nums):
-    N = len(nums)
-    count = 0
-    i = 1
-    while i < N:
-        if nums[i] != 101 and nums[i] == nums[i - 1]:
-            count += 1
-            nums = nums[:i] + nums[i + 1:] + [101]
-            # print(nums, count)
-        else:
-            i += 1
-    # print(nums, count)
-    return N - count
+    p1 = 0
+    for p2 in range(len(nums)):
+        if nums[p1] != nums[p2]:
+            p1 += 1
+            nums[p1] = nums[p2]
+            # print(nums)
+    return p1 + 1
 
-nums = [1,1,2]
-# nums = [0,0,1,1,1,2,2,3,3,4]
+# nums = [1,1,2]
+nums = [0,0,1,1,1,2,2,3,3,4]
 k = removeDuplicates(nums)
 print(k)
